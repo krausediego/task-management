@@ -2,6 +2,7 @@ import { Toaster } from "@/components/ui/toaster";
 import "./globals.css";
 import type { Metadata } from "next";
 import { Urbanist } from "next/font/google";
+import { ClientProvider } from "./client-provider";
 
 const urbanist = Urbanist({ subsets: ["latin"] });
 
@@ -18,8 +19,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body suppressHydrationWarning className={urbanist.className}>
-        {children}
-        <Toaster />
+        <ClientProvider>
+          {children}
+          <Toaster />
+        </ClientProvider>
       </body>
     </html>
   );

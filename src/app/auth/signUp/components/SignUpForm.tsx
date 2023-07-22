@@ -1,7 +1,6 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
 import {
   Form,
   FormControl,
@@ -11,13 +10,15 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Check, Eye, EyeOff } from "lucide-react";
+import { Check, Eye, EyeOff, X } from "lucide-react";
 import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signUpSchema } from "@/schemas/auth";
 import { z } from "zod";
 import { useToast } from "@/components/ui/use-toast";
+import { useSignUpMutation } from "@/hooks/services/auth/useSignUpMutation";
+import request from "axios";
 
 function SignUpForm() {
   const [passwordView, setPasswordView] = useState(false);
@@ -41,15 +42,35 @@ function SignUpForm() {
     resolver: zodResolver(signUpSchema),
   });
 
+  const { mutateAsync, isLoading } = useSignUpMutation();
+
   const onSubmit: SubmitHandler<z.infer<typeof signUpSchema>> = async (
     data
   ) => {
-    console.log(data);
-    toast({
-      title: "Cadastro realizado com sucesso",
-      action: <Check />,
-      variant: "success",
-    });
+    const { email, username, password } = data;
+    try {
+      await mutateAsync({ email, username, password });
+      return toast({
+        title: "Cadastro realizado com sucesso",
+        action: <Check />,
+        variant: "success",
+      });
+    } catch (error) {
+      if (request.isAxiosError(error) && error.request) {
+        if (error.response?.status === 409) {
+          return toast({
+            title: "Nome de usuário ou email em uso",
+            action: <X />,
+            variant: "destructive",
+          });
+        }
+      }
+      return toast({
+        title: "Erro ao realizar o cadastro",
+        action: <X />,
+        variant: "destructive",
+      });
+    }
   };
 
   return (
