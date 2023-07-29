@@ -7,7 +7,7 @@ import { z } from "zod";
 const useSignUpMutation = () =>
   useMutation(
     async (data: Omit<z.infer<typeof signUpSchema>, "repeatPassword">) => {
-      await signUpService(data);
+      return signUpService(data);
     },
     {
       onSuccess: async (profile) =>

@@ -14,13 +14,6 @@ const signUpSchema = z
     repeatPassword: z
       .string()
       .min(6, "A senha deve conter ao menos 6 caracteres."),
-    // acceptTerms: z
-    //   .boolean()
-    //   .default(false)
-    //   .refine((val) => val === undefined, {
-    //     message: "Aceite os termos",
-    //     path: ["acceptTerms"],
-    //   }),
   })
   .refine(({ password, repeatPassword }) => password === repeatPassword, {
     message: "Senhas nao conferem.",

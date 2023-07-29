@@ -1,14 +1,22 @@
 "use client";
 
-import { Footer, Header, SignUpForm } from "./components";
+import { SignUpForm } from "./components";
+import { Header, Container, Footer } from "../components";
 
 function AuthSignUp() {
   return (
-    <div className="w-full lg:w-[25%] p-4 rounded-lg flex flex-col gap-5">
-      <Header />
+    <Container>
+      <Header
+        title="Crie sua conta"
+        description="Insira seus dados, e crie sua conta grátis"
+      />
       <SignUpForm />
-      <Footer />
-    </div>
+      <Footer
+        message="Já é cadastrado ?"
+        linkMessage="Entrar"
+        route="/auth/signIn"
+      />
+    </Container>
   );
 }
 

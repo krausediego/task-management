@@ -5,7 +5,10 @@ import { signUpSchema } from "@/schemas/auth";
 const signUpService = (
   data: Omit<z.infer<typeof signUpSchema>, "repeatPassword">
 ) => {
-  return api.post("/auth/signUp", data);
+  return api.post<{ data: { id: string; token: string } }>(
+    "/auth/signUp",
+    data
+  );
 };
 
 export { signUpService };

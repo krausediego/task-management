@@ -17,12 +17,13 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { signUpSchema } from "@/schemas/auth";
 import { z } from "zod";
 import { useToast } from "@/components/ui/use-toast";
-import { useSignUpMutation } from "@/hooks/services/auth/useSignUpMutation";
+import { useSignUpMutation } from "@/hooks/services";
 import request from "axios";
 
 function SignUpForm() {
   const [passwordView, setPasswordView] = useState(false);
   const [repeatPasswordView, setRepeatPasswordView] = useState(false);
+
   const { toast } = useToast();
 
   const showPassword = (show: boolean): string => {
@@ -40,16 +41,22 @@ function SignUpForm() {
 
   const form = useForm<z.infer<typeof signUpSchema>>({
     resolver: zodResolver(signUpSchema),
+    defaultValues: {
+      username: "",
+      email: "",
+      password: "",
+      repeatPassword: "",
+    },
   });
 
-  const { mutateAsync, isLoading } = useSignUpMutation();
+  const { mutateAsync } = useSignUpMutation();
 
   const onSubmit: SubmitHandler<z.infer<typeof signUpSchema>> = async (
     data
   ) => {
     const { email, username, password } = data;
     try {
-      await mutateAsync({ email, username, password });
+      const response = await mutateAsync({ email, username, password });
       return toast({
         title: "Cadastro realizado com sucesso",
         action: <Check />,
@@ -165,23 +172,6 @@ function SignUpForm() {
             </FormItem>
           )}
         />
-        {/* <FormField
-          control={form.control}
-          name="acceptTerms"
-          render={({ field }) => (
-            <FormItem className="flex items-center gap-2 space-y-0">
-              <FormControl>
-                <Checkbox
-                  checked={field.value}
-                  onCheckedChange={() => field.onChange(!field.value)}
-                />
-              </FormControl>
-              <div className="space-y-1 leading-none">
-                <FormLabel>Aceito os termos</FormLabel>
-              </div>
-            </FormItem>
-          )}
-        /> */}
         <Button size="lg" type="submit" variant="primary">
           Cadastrar
         </Button>
