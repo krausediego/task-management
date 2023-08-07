@@ -17,6 +17,17 @@ module.exports = {
     },
     extend: {
       colors: {
+        secondaryColor: {
+          100 : '#DFE1F3',
+          200 : '#C2C6E8',
+          300 : '#8E92BC',
+          400 : '#54577A',
+          500 : '#141522',
+          600 : '#0E0F1D',
+          700 : '#0A0A18',
+          800 : '#060713',
+          900 : '#040815',
+        },
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
@@ -72,5 +83,5 @@ module.exports = {
       },
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [require("tailwindcss-animate"), require('@tailwindcss/typography')],
 }

@@ -1,5 +1,5 @@
 import { Toaster } from "@/components/ui/toaster";
-import "./globals.css";
+import "./globals.scss";
 import type { Metadata } from "next";
 import { Urbanist } from "next/font/google";
 import { ClientProvider } from "./client-provider";

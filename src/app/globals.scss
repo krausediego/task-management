@@ -76,3 +76,99 @@
     @apply bg-background text-foreground;
   }
 }
+
+.editorControls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5em;
+  margin-bottom: 0.5em;
+}
+
+.editorControls button {
+  border-bottom: 3px solid transparent;
+}
+
+.editorControls button.is-active {
+  border-bottom: 3px solid black;
+}
+
+.ProseMirror {
+  width: 100%;
+  background-color: #fff;
+  overflow: auto;
+}
+
+.ProseMirror:focus {
+  outline: none;
+}
+
+.ProseMirror-selectednode {
+  outline: 2px solid red;
+}
+
+.ProseMirror h1.is-empty:nth-child(1)::before {
+  color: #adb5bd;
+  content: attr(data-placeholder);
+  float: left;
+  height: 0;
+  pointer-events: none;
+}
+
+ul[data-type="taskList"] {
+  list-style: none;
+  padding: 0;
+
+  p {
+    margin: 0;
+  }
+
+  li {
+    display: flex;
+
+    > label {
+      flex: 0 0 auto;
+      margin-right: 0.5rem;
+      user-select: none;
+
+      > input {
+        appearance: none;
+    -webkit-appearance: none;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    border: 2px solid #ccc;
+    outline: none;
+    position: relative;
+    transition: border-color 0.3s;
+
+    &:checked {
+      border-color: #007bff;
+      background-color: #007bff;
+      
+      &::before,
+      &::after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+      
+      &::before {
+        content: "✔";
+        color: white;
+        font-size: 10px;
+      }
+    }
+      }
+    }
+
+    > div {
+      flex: 1 1 auto;
+
+      > p {
+        font-size: 14px;
+      }
+    }
+  }
+}
